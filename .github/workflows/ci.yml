@@ -6,6 +6,9 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+env:
+  DO_NOT_TRACK: 1
+
 jobs:
   lint:
     runs-on: ubuntu-latest
