@@ -33,5 +33,11 @@
     "commander": "^12.1.0",
     "@112dev/phunt-core": "workspace:*",
     "@112dev/phunt-typeguards": "workspace:*"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown",
+      "eslint --fix"
+    ]
   }
 }

@@ -14,6 +14,12 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write --ignore-unknown ."
   },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown",
+      "eslint --fix"
+    ]
+  },
   "devDependencies": {
     "@112dev/phunt-eslint-config": "workspace:*",
     "@112dev/phunt-prettier-config": "workspace:*",
