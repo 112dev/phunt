@@ -5,6 +5,9 @@
     "name": "Vladimir Jelovac",
     "url": "https://github.com/jelovac"
   },
+  "config": {
+    "DO_NOT_TRACK": 1
+  },
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
