@@ -1,0 +1,27 @@
+{
+  "name": "@112dev/phunt-db",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc -p tsconfig.lib.json",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write --ignore-unknown ."
+  },
+  "devDependencies": {
+    "@112dev/phunt-eslint-config": "workspace:*",
+    "@112dev/phunt-prettier-config": "workspace:*",
+    "@112dev/phunt-typescript-config": "workspace:*",
+    "@112dev/phunt-contracts": "workspace:*",
+    "@types/better-sqlite3": "^7.6.11"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.2.1"
+  }
+}

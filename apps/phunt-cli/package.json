@@ -1,0 +1,37 @@
+{
+  "name": "@112dev/phunt-cli",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "bin": {
+    "phunt": "./dist/bundle.js"
+  },
+  "scripts": {
+    "dev": "rollup --config rollup.config.mjs --watch",
+    "build": "rollup --config rollup.config.mjs",
+    "lint": "eslint . --max-warnings 0",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@112dev/phunt-eslint-config": "workspace:*",
+    "@112dev/phunt-prettier-config": "workspace:*",
+    "@112dev/phunt-typescript-config": "workspace:*",
+    "@112dev/phunt-jest-config": "workspace:*",
+    "rollup": "^4.21.2",
+    "@112dev/phunt-rollup-config": "workspace:*",
+    "@rollup/plugin-alias": "^5.1.0",
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.7",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "@112dev/phunt-contracts": "workspace:*"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "@112dev/phunt-core": "workspace:*",
+    "@112dev/phunt-typeguards": "workspace:*"
+  }
+}

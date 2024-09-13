@@ -1,0 +1,32 @@
+{
+  "name": "@112dev/phunt-core",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write --ignore-unknown .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@112dev/phunt-eslint-config": "workspace:*",
+    "@112dev/phunt-prettier-config": "workspace:*",
+    "@112dev/phunt-typescript-config": "workspace:*",
+    "@112dev/phunt-jest-config": "workspace:*",
+    "@112dev/phunt-contracts": "workspace:*"
+  },
+  "dependencies": {
+    "@112dev/phunt-db": "workspace:*",
+    "@112dev/phunt-typeguards": "workspace:*",
+    "date-fns": "^3.6.0",
+    "exifreader": "^4.23.5",
+    "tslib": "^2.3.0",
+    "winston": "^3.14.2"
+  }
+}

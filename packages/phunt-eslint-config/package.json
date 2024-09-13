@@ -1,0 +1,14 @@
+{
+  "name": "@112dev/phunt-eslint-config",
+  "version": "1.0.0",
+  "private": true,
+  "files": [
+    "standard.mjs"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsdoc": "^50.2.2",
+    "globals": "^15.9.0"
+  }
+}

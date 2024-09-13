@@ -1,0 +1,3 @@
+{
+  "extends": "@112dev/phunt-typescript-config/base.json"
+}

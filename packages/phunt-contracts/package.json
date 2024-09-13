@@ -1,0 +1,38 @@
+{
+  "name": "@112dev/phunt-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./db": {
+      "types": "./src/db.ts",
+      "default": "./dist/db.js"
+    },
+    "./file-search": {
+      "types": "./src/file-search.ts",
+      "default": "./dist/file-search.js"
+    },
+    "./file": {
+      "types": "./src/file.ts",
+      "default": "./dist/file.js"
+    },
+    "./logger": {
+      "types": "./src/logger.ts",
+      "default": "./dist/logger.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write --ignore-unknown ."
+  },
+  "devDependencies": {
+    "@112dev/phunt-eslint-config": "workspace:*",
+    "@112dev/phunt-prettier-config": "workspace:*",
+    "@112dev/phunt-typescript-config": "workspace:*"
+  },
+  "dependencies": {}
+}
