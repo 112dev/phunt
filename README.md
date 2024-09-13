@@ -33,11 +33,11 @@ This command will start a daemon which will listen to file changes while develop
 
 ## License
 
-The code in the `root` monorepo is licensed under the Apache 2.0 license.
+The code in the `root` monorepo is licensed under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0).
 
-All subcomponents within the `root`, including `apps` and `packages`, are also licensed under the Apache 2.0 license
-unless otherwise specified in their source. The applicable license for each subcomponent will be documented in one of
-the following ways:
+All subcomponents within the `root`, including `apps` and `packages`, are also licensed under
+the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0) unless otherwise specified in their source. The
+applicable license for each subcomponent will be documented in one of the following ways:
 
 - A dedicated `README`, `LICENSE`, or `COPYRIGHT` file within the subcomponent
 - A license header within the source code files
