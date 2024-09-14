@@ -30,13 +30,16 @@ const rollupOptions = {
       verbose: true,
     }),
     replace({
-      __PHUNT_CLI_VERSION__: JSON.stringify(pkg.version),
-      __PHUNT_CLI_BUILD_ID__: () => {
-        return env["BUILD_ID"] ?? "unknown";
+      values: {
+        __PHUNT_CLI_VERSION__: JSON.stringify(pkg.version),
+        __PHUNT_CLI_BUILD_ID__: () => {
+          return env["BUILD_ID"] ?? "unknown";
+        },
+        __PHUNT_CLI_BUILD_DATE__: () => {
+          return JSON.stringify(new Date());
+        },
       },
-      __PHUNT_CLI_BUILD_DATE__: () => {
-        return JSON.stringify(new Date());
-      },
+      preventAssignment: true,
     }),
     nodeResolve({
       preferBuiltins: false,
