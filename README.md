@@ -1,5 +1,7 @@
 # phunt
 
+[![phunt: Continuous Integration](https://github.com/112dev/phunt/actions/workflows/ci.yml/badge.svg)](https://github.com/112dev/phunt/actions/workflows/ci.yml)
+
 phunt - is a collection of software which can help end users organize digital media such as photos and images.
 
 ## Structure
