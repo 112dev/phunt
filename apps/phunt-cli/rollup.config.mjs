@@ -34,7 +34,7 @@ const rollupOptions = {
         __PHUNT_CLI_VERSION__: JSON.stringify(pkg.version),
         __PHUNT_CLI_LICENSE__: JSON.stringify(pkg.license),
         __PHUNT_CLI_BUILD_ID__: () => {
-          return env["BUILD_ID"] ?? "unknown";
+          return JSON.stringify(env["BUILD_ID"] ?? "unknown");
         },
         __PHUNT_CLI_BUILD_DATE__: () => {
           return JSON.stringify(new Date());
