@@ -78,6 +78,8 @@ jobs:
         run: pnpm install
 
       - name: Build monorepo
+        env:
+          BUILD_ID: ${{ github.run_id }}
         run: pnpm build
 
       - name: Test monorepo
