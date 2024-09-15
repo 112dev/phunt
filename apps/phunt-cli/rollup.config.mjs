@@ -32,18 +32,15 @@ const rollupOptions = {
     replace({
       values: {
         __PHUNT_CLI_NAME__: () => {
-          const name = pkg.name.startsWith("@")
-            ? pkg.name.split("/")[1]
-            : pkg.name;
-          return JSON.stringify(name);
+          return pkg.name.startsWith("@") ? pkg.name.split("/")[1] : pkg.name;
         },
-        __PHUNT_CLI_VERSION__: JSON.stringify(pkg.version),
-        __PHUNT_CLI_LICENSE__: JSON.stringify(pkg.license),
+        __PHUNT_CLI_VERSION__: pkg.version,
+        __PHUNT_CLI_LICENSE__: pkg.license,
         __PHUNT_CLI_BUILD_ID__: () => {
-          return JSON.stringify(env["BUILD_ID"] ?? "unknown");
+          return env["BUILD_ID"] ?? "unknown";
         },
         __PHUNT_CLI_BUILD_DATE__: () => {
-          return JSON.stringify(new Date());
+          return new Date().toUTCString();
         },
       },
       preventAssignment: true,

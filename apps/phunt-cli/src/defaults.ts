@@ -1,1 +1,1 @@
-export const DefaultPhotoExtensions = ["jpg", "jpeg", "png", "gif", "svg"];
+export const DefaultMediaFileExtensions = ["jpg", "jpeg", "png", "gif", "svg"];

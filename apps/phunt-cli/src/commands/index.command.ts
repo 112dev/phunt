@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { DefaultPhotoExtensions } from "../defaults";
+import { DefaultMediaFileExtensions } from "../defaults";
 import * as path from "path";
 import { promises as fs, Stats } from "fs";
 import {
@@ -82,25 +82,25 @@ export default function buildIndexCommand(): Command {
   const command = new Command("index");
 
   command.description(`
-    Indexes digital photo files in the specified destination directory.
+    Indexes digital media files in the specified destination directory.
     This command is useful when we suspect that the directory index is not in sync with the directory contents.
   `);
 
   command.option(
     "--ext <extensions...>",
-    "Set the file extensions of the photos to include in the index.",
-    DefaultPhotoExtensions,
+    "Set the file extensions of the media files to include in the index.",
+    DefaultMediaFileExtensions,
   );
 
   command.option(
     "--recursive",
-    "Traverse all subdirectories to search for photos recursively.",
+    "Traverse all subdirectories to search for media files recursively.",
     false,
   );
 
   command.argument(
     "<dest>",
-    "Filesystem path towards the destination directory where the found photos will be indexed.",
+    "Filesystem path towards the destination directory where the index action will be performed.",
   );
 
   command.action(async (dest, options): Promise<void> => {

@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { DefaultPhotoExtensions } from "../defaults";
+import { DefaultMediaFileExtensions } from "../defaults";
 import * as path from "path";
 import { promises as fs, Stats } from "fs";
 import {
@@ -177,27 +177,24 @@ const syncFiles = async (
 export default function buildSyncCommand(): Command {
   const command = new Command("sync");
 
-  command.description(`
-    Synchronizes digital photo files from specified source directories to a destination directory.
-    The command indexes and manages photo files, applies customizable patterns for organizing them,
-    and handles duplicates based on specified strategies. Useful for keeping your photo collections
-    organized and in sync with your directory structure.
-  `);
+  command.description(
+    "Synchronizes digital media files from specified source directories to a destination directory. The command indexes and manages digital media files, applies customizable patterns for organizing them, and handles duplicates based on specified strategies. Useful for keeping your digital media collections organized and in sync with your directory structure.",
+  );
 
   command.addOption(
     command
       .createOption(
         "--ext <extensions...>",
-        "Sets the file extensions of the photos to include in the sync.",
+        "Sets the file extensions of the digital media files to include in the sync.",
       )
-      .default(DefaultPhotoExtensions),
+      .default(DefaultMediaFileExtensions),
   );
 
   command.addOption(
     command
       .createOption(
         "--recursive",
-        "Perform recursive photo search in the source directory.",
+        "Perform recursive digital media file search in the source directory.",
       )
       .default(false),
   );
@@ -206,7 +203,7 @@ export default function buildSyncCommand(): Command {
     command
       .createOption(
         "--remove-src",
-        "Remove the source image once it is copied to the destination directory.",
+        "Remove the source digital media file once it is copied to the destination directory.",
       )
       .default(false),
   );
@@ -216,7 +213,7 @@ export default function buildSyncCommand(): Command {
       .createOption(
         "--dest-pattern",
         `
-            Pattern for organizing photos at the destination.
+            Pattern for organizing digital media files at the destination.
 
             Available patterns:
 
@@ -236,7 +233,7 @@ export default function buildSyncCommand(): Command {
     command
       .createOption(
         "--include-duplicates",
-        "Copy the image even if it exists at the destination.",
+        "Copy the digital media file even if it exists at the destination.",
       )
       .default(false),
   );
@@ -246,7 +243,7 @@ export default function buildSyncCommand(): Command {
       .createOption(
         "--duplicate-filter-strategy",
         `
-            Strategy to filter duplicate images.
+            Strategy to filter duplicate digital media files.
 
             Available filters:
 
@@ -265,7 +262,7 @@ export default function buildSyncCommand(): Command {
       .createOption(
         "--unresolvable-strategy",
         `
-            Strategy for photos lacking sufficient information.
+            Strategy for digital media files lacking sufficient information.
 
             Available scenarios:
 
@@ -280,14 +277,14 @@ export default function buildSyncCommand(): Command {
   command.addArgument(
     command.createArgument(
       "<dest>",
-      "Filesystem path to the destination directory for storing photos.",
+      "Filesystem path to the destination directory for storing digital media files.",
     ),
   );
 
   command.addArgument(
     command.createArgument(
       "<src...>",
-      "Filesystem path(s) to the source directory where to look for photos.",
+      "Filesystem path(s) to the source directory where to look for digital media files.",
     ),
   );
 
