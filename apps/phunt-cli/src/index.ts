@@ -6,6 +6,8 @@ import buildIndexCommand from "./commands/index.command";
 
 const app = new Command();
 
+app.name("__PHUNT_CLI_NAME__");
+
 app.version(`Version: __PHUNT_CLI_VERSION__
 Build Id: __PHUNT_CLI_BUILD_ID__
 Build Date: __PHUNT_CLI_BUILD_DATE__

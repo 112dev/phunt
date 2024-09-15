@@ -31,6 +31,12 @@ const rollupOptions = {
     }),
     replace({
       values: {
+        __PHUNT_CLI_NAME__: () => {
+          const name = pkg.name.startsWith("@")
+            ? pkg.name.split("/")[1]
+            : pkg.name;
+          return JSON.stringify(name);
+        },
         __PHUNT_CLI_VERSION__: JSON.stringify(pkg.version),
         __PHUNT_CLI_LICENSE__: JSON.stringify(pkg.license),
         __PHUNT_CLI_BUILD_ID__: () => {
