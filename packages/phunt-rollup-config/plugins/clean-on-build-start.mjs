@@ -1,25 +1,31 @@
-import {rm, mkdir} from "node:fs/promises";
+import { access } from 'fs/promises';
+import {rimraf} from 'rimraf';
 
 /**
- * A Rollup plugin that removes a specified directory before the first write operation.
- * Subsequent write operations will wait for the removal to complete.
- *
- * @param {string} directory - The path of the directory to remove before writing.
- * @returns A Rollup plugin object with a `generateBundle` hook.
+ * @param {string} directory - The path of the directory to clean.
+ * @returns A Rollup plugin object with a `buildStart` hook.
  */
 export function cleanOnBuildStart(directory) {
-  let removePromise;
   return {
-    buildStart(_options) {
-      removePromise ??= rm(directory, {
-        force: true,
-        recursive: true,
-      }).then(async () => {
-        // recreate the removed directory
-        await mkdir(directory);
-      });
+    /**
+     * @param {import("rollup").InputOptions|null} options}
+     * @return {Promise<void>}
+     */
+    async buildStart(options) {
+      try {
+        await access(directory)
+      } catch(error) {
+        console.log("RollupPlugin.cleanOnBuildStart: Unable to access the specified directory! Skipping..");
+        return;
+      }
 
-      return removePromise;
+      await rimraf(
+        `${directory}/*`,
+        {
+          glob: true,
+          preserveRoot: true
+        }
+      );
     },
     name: "clean-on-build-start",
   };
