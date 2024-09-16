@@ -1,4 +1,4 @@
-export type DuplicateFilterStrategy = "checksum";
+export type DuplicateFilterStrategy = "checksum" | "bpb";
 
 export type FileSyncCriteria = {
   srcFile: string;

@@ -278,4 +278,21 @@ export class FileOps {
   async removeFileAsync(filePath: string): Promise<void> {
     await fs.unlink(filePath);
   }
+
+  compareFileBuffersBytePerByte(
+    srcFileBuffer: Buffer,
+    targetFileBuffer: Buffer,
+  ): boolean {
+    if (srcFileBuffer.length !== targetFileBuffer.length) {
+      return false;
+    }
+
+    for (let i = 0; i < srcFileBuffer.length; i++) {
+      if (srcFileBuffer[i] !== targetFileBuffer[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }

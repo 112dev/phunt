@@ -5,19 +5,23 @@ import {
 } from "../../file-sync.types";
 import { FileIndexTableDbService } from "../../../db";
 import { FileOps } from "../../../file-ops";
+import { FileSearchService } from "@112dev/phunt-contracts";
 
 type DuplicateFileValidatorServiceParams = {
   readonly fileOps: FileOps;
   readonly fileIndexTableDbService: FileIndexTableDbService;
+  readonly fileSearchService: FileSearchService;
 };
 
 export class DuplicateFileValidatorService implements FileSyncValidator {
   private readonly fileOps: FileOps;
   private readonly fileIndexTableDbService: FileIndexTableDbService;
+  private readonly fileSearchService: FileSearchService;
 
   constructor(params: DuplicateFileValidatorServiceParams) {
     this.fileOps = params.fileOps;
     this.fileIndexTableDbService = params.fileIndexTableDbService;
+    this.fileSearchService = params.fileSearchService;
   }
 
   async validateAsync(criteria: FileSyncCriteria): Promise<void> {
@@ -26,6 +30,7 @@ export class DuplicateFileValidatorService implements FileSyncValidator {
     }
 
     const foundFileDuplicatePath = await this.searchForFileAtDestination(
+      criteria.destDir,
       criteria.srcFile,
       criteria.duplicateFilterStrategy,
     );
@@ -39,12 +44,18 @@ export class DuplicateFileValidatorService implements FileSyncValidator {
   }
 
   private async searchForFileAtDestination(
+    destDirPath: string,
     srcFilePath: string,
     duplicateFilterStrategy: DuplicateFilterStrategy,
   ): Promise<string | undefined> {
     if (duplicateFilterStrategy === "checksum") {
       return await this.searchForFileAtDestinationUsingChecksumStrategy(
         srcFilePath,
+      );
+    } else if (duplicateFilterStrategy === "bpb") {
+      return await this.searchForFileAtDestinationUsingBytePerByteStrategy(
+        srcFilePath,
+        destDirPath,
       );
     }
 
@@ -66,6 +77,34 @@ export class DuplicateFileValidatorService implements FileSyncValidator {
     );
 
     return existingFileIndexRecord?.path;
+  }
+
+  private async searchForFileAtDestinationUsingBytePerByteStrategy(
+    srcFilePath: string,
+    destDirPath: string,
+  ): Promise<string | undefined> {
+    const srcFileBuffer = await this.fileOps.readFileAsync(srcFilePath);
+
+    const srcFileExtension = this.fileOps.getFileExtension(srcFilePath);
+
+    const destFilePathsList = await this.fileSearchService.searchAsync({
+      srcDir: destDirPath,
+      recursive: true,
+      fileExtensions: [srcFileExtension],
+    });
+
+    for (const destFilePath of destFilePathsList) {
+      const destFileBuffer = await this.fileOps.readFileAsync(destFilePath);
+
+      if (
+        this.fileOps.compareFileBuffersBytePerByte(
+          srcFileBuffer,
+          destFileBuffer,
+        )
+      ) {
+        return destFilePath;
+      }
+    }
   }
 }
 

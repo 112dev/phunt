@@ -65,6 +65,7 @@ const syncCommandAction = async (
 
   const fileSyncService = new FileSyncService({
     fileOps: fileOpsService,
+    fileSearchService: fileSearchService,
     fileIndexTableDbService: fileIndexTableDbService,
     logger: loggerService,
   });
@@ -243,11 +244,9 @@ export default function buildSyncCommand(): Command {
 
             - bpb: Byte per byte comparison
             - checksum: Checksum comparison
-            - metadata: Metadata comparison (EXIF)
-            - TBD: AI APIs
             `,
       )
-      .choices(["checksum"])
+      .choices(["checksum", "bpb"])
       .default("checksum"),
   );
 
@@ -329,7 +328,9 @@ const assertSyncCommandArguments = (
     throw new Error("Invalid includeDuplicates: must be a boolean.");
   }
 
-  if (duplicateFilterStrategy !== "checksum") {
-    throw new Error('Invalid duplicateFilterStrategy: must be "checksum".');
+  if (!["checksum", "bpb"].includes(duplicateFilterStrategy)) {
+    throw new Error(
+      'Invalid duplicateFilterStrategy: must be "checksum" or "bpb".',
+    );
   }
 };

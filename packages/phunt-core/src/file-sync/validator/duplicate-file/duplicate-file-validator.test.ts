@@ -9,10 +9,11 @@ import {
   FileIndexTableDbService,
 } from "../../../db/file-index";
 import { FileOps } from "../../../file-ops";
-import { FileChecksum } from "@112dev/phunt-contracts";
+import { FileChecksum, FileSearchService } from "@112dev/phunt-contracts";
 
 describe("DuplicateFileValidatorService", () => {
   let fileOpsMock: jest.Mocked<FileOps>;
+  let fileSearchServiceMock: jest.Mocked<FileSearchService>;
   let fileIndexTableDbServiceMock: jest.Mocked<FileIndexTableDbService>;
   let duplicateFileValidatorService: DuplicateFileValidatorService;
 
@@ -20,7 +21,13 @@ describe("DuplicateFileValidatorService", () => {
     fileOpsMock = {
       readFileAsync: jest.fn(),
       calculateFileChecksumAsync: jest.fn(),
+      compareFileBuffersBytePerByte: jest.fn(),
+      getFileExtension: jest.fn(),
     } as unknown as jest.Mocked<FileOps>;
+
+    fileSearchServiceMock = {
+      searchAsync: jest.fn(),
+    } as unknown as jest.Mocked<FileSearchService>;
 
     fileIndexTableDbServiceMock = {
       getByChecksum: jest.fn(),
@@ -29,6 +36,7 @@ describe("DuplicateFileValidatorService", () => {
     duplicateFileValidatorService = new DuplicateFileValidatorService({
       fileOps: fileOpsMock,
       fileIndexTableDbService: fileIndexTableDbServiceMock,
+      fileSearchService: fileSearchServiceMock,
     });
   });
 
@@ -47,7 +55,7 @@ describe("DuplicateFileValidatorService", () => {
     expect(fileIndexTableDbServiceMock.getByChecksum).not.toHaveBeenCalled();
   });
 
-  it("should throw DuplicateErrorDuplicateFileValidatorService if a duplicate is found", async () => {
+  it("should throw DuplicateErrorDuplicateFileValidatorService if a checksum duplicate is found", async () => {
     const criteriaStub = {
       srcFile: "path/to/source/phunt-file",
       duplicateFilterStrategy: "checksum",
@@ -91,7 +99,7 @@ describe("DuplicateFileValidatorService", () => {
     );
   });
 
-  it("should not throw error if no duplicate is found", async () => {
+  it("should not throw error if no checksum duplicate is found", async () => {
     const criteriaStub = {
       srcFile: "path/to/source/phunt-file",
       duplicateFilterStrategy: "checksum",
@@ -120,6 +128,81 @@ describe("DuplicateFileValidatorService", () => {
     );
     expect(fileIndexTableDbServiceMock.getByChecksum).toHaveBeenCalledWith(
       mockChecksum.value,
+    );
+  });
+
+  it("should throw DuplicateErrorDuplicateFileValidatorService if a byte-per-byte duplicate is found", async () => {
+    const criteriaStub = {
+      srcFile: "path/to/source/phunt-file",
+      duplicateFilterStrategy: "bpb",
+      destDir: "path/to/destination",
+      includeDuplicates: false,
+    } as Partial<FileSyncCriteria> as FileSyncCriteria;
+
+    const mockFileBuffer = Buffer.from("phunt-file content");
+    const mockDestFileBuffer = Buffer.from("phunt-file content");
+
+    fileOpsMock.readFileAsync.mockResolvedValueOnce(mockFileBuffer);
+    fileOpsMock.readFileAsync.mockResolvedValueOnce(mockDestFileBuffer);
+    fileOpsMock.compareFileBuffersBytePerByte.mockReturnValue(true);
+    fileOpsMock.getFileExtension.mockReturnValue(".phunt");
+
+    const destFileList = ["path/to/destination/phunt-file"];
+    fileSearchServiceMock.searchAsync.mockResolvedValue(destFileList);
+
+    await expect(
+      duplicateFileValidatorService.validateAsync(criteriaStub),
+    ).rejects.toThrowError(
+      new DuplicateErrorDuplicateFileValidatorService(
+        criteriaStub,
+        "path/to/destination/phunt-file",
+      ),
+    );
+
+    expect(fileOpsMock.readFileAsync).toHaveBeenCalledWith(
+      "path/to/source/phunt-file",
+    );
+    expect(fileOpsMock.readFileAsync).toHaveBeenCalledWith(
+      "path/to/destination/phunt-file",
+    );
+    expect(fileOpsMock.compareFileBuffersBytePerByte).toHaveBeenCalledWith(
+      mockFileBuffer,
+      mockDestFileBuffer,
+    );
+  });
+
+  it("should not throw error if no byte-per-byte duplicate is found", async () => {
+    const criteriaStub = {
+      srcFile: "path/to/source/phunt-file",
+      duplicateFilterStrategy: "bpb",
+      destDir: "path/to/destination",
+      includeDuplicates: false,
+    } as Partial<FileSyncCriteria> as FileSyncCriteria;
+
+    const mockFileBuffer = Buffer.from("phunt-file content");
+    const mockDestFileBuffer = Buffer.from("different content");
+
+    fileOpsMock.readFileAsync.mockResolvedValueOnce(mockFileBuffer);
+    fileOpsMock.readFileAsync.mockResolvedValueOnce(mockDestFileBuffer);
+    fileOpsMock.compareFileBuffersBytePerByte.mockReturnValue(false);
+    fileOpsMock.getFileExtension.mockReturnValue(".phunt");
+
+    const destFileList = ["path/to/destination/phunt-file"];
+    fileSearchServiceMock.searchAsync.mockResolvedValue(destFileList);
+
+    await expect(
+      duplicateFileValidatorService.validateAsync(criteriaStub),
+    ).resolves.toBeUndefined();
+
+    expect(fileOpsMock.readFileAsync).toHaveBeenCalledWith(
+      "path/to/source/phunt-file",
+    );
+    expect(fileOpsMock.readFileAsync).toHaveBeenCalledWith(
+      "path/to/destination/phunt-file",
+    );
+    expect(fileOpsMock.compareFileBuffersBytePerByte).toHaveBeenCalledWith(
+      mockFileBuffer,
+      mockDestFileBuffer,
     );
   });
 });

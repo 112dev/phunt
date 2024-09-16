@@ -3,6 +3,7 @@ import {
   SqliteConnection,
   FileExifData,
   FileStats,
+  FileSearchService,
 } from "@112dev/phunt-contracts";
 import { FileIndexTableDbService } from "../db/file-index";
 import { DateParser } from "../date-parser";
@@ -14,6 +15,7 @@ describe("FileSyncService", () => {
   let loggerMock: jest.Mocked<WinstonBasedLogger>;
   let dateParserMock: jest.Mocked<DateParser>;
   let fileOpsMock: jest.Mocked<FileOps>;
+  let fileSearchServiceMock: jest.Mocked<FileSearchService>;
   let dbMock: SqliteConnection;
   let fileIndexTableDbServiceMock: jest.Mocked<FileIndexTableDbService>;
   let fileSyncService: FileSyncService;
@@ -29,6 +31,10 @@ describe("FileSyncService", () => {
       logger: loggerMock,
     }) as jest.Mocked<FileOps>;
 
+    fileSearchServiceMock = {
+      searchAsync: jest.fn(),
+    } as unknown as jest.Mocked<FileSearchService>;
+
     dbMock = {} as Partial<SqliteConnection> as SqliteConnection;
 
     fileIndexTableDbServiceMock = new FileIndexTableDbService(
@@ -38,6 +44,7 @@ describe("FileSyncService", () => {
     fileSyncService = new FileSyncService({
       logger: loggerMock,
       fileOps: fileOpsMock,
+      fileSearchService: fileSearchServiceMock,
       fileIndexTableDbService: fileIndexTableDbServiceMock,
     });
   });

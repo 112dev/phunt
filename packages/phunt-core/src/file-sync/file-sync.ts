@@ -3,28 +3,36 @@ import path from "path";
 import { FileSyncValidatorService } from "./validator/validator";
 import { DuplicateErrorDuplicateFileValidatorService } from "./validator/duplicate-file/duplicate-file-validator";
 import { FileIndexRecord, FileIndexTableDbService } from "../db";
-import { Logger, FileMetadata } from "@112dev/phunt-contracts";
+import {
+  Logger,
+  FileMetadata,
+  FileSearchService,
+} from "@112dev/phunt-contracts";
 import { FileOps } from "../file-ops";
 
 type FileSyncServiceParams = {
   readonly fileOps: FileOps;
+  readonly fileSearchService: FileSearchService;
   readonly fileIndexTableDbService: FileIndexTableDbService;
   readonly logger: Logger;
 };
 
 export class FileSyncService {
   private readonly fileOps: FileOps;
+  private readonly fileSearchService: FileSearchService;
   private readonly fileIndexTableDbService: FileIndexTableDbService;
   private readonly logger: Logger;
   private readonly fileSyncValidatorService: FileSyncValidatorService;
 
   constructor(params: FileSyncServiceParams) {
     this.fileOps = params.fileOps;
+    this.fileSearchService = params.fileSearchService;
     this.fileIndexTableDbService = params.fileIndexTableDbService;
     this.logger = params.logger;
 
     this.fileSyncValidatorService = new FileSyncValidatorService({
       fileOps: this.fileOps,
+      fileSearchService: this.fileSearchService,
       fileIndexTableDbService: this.fileIndexTableDbService,
     });
   }
