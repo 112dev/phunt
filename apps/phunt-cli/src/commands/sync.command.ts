@@ -208,8 +208,7 @@ export default function buildSyncCommand(): Command {
     command
       .createOption(
         "--dest-pattern",
-        `
-            Pattern for organizing digital media files at the destination.
+        `Pattern for organizing digital media files at the destination.
 
             Available patterns:
 
@@ -238,8 +237,7 @@ export default function buildSyncCommand(): Command {
     command
       .createOption(
         "--duplicate-filter-strategy",
-        `
-            Strategy to filter duplicate digital media files.
+        `Strategy to filter duplicate digital media files.
 
             Available filters:
 
