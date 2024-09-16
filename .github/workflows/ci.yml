@@ -86,7 +86,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: monorepo-build-artifacts-${{ github.sha }}
+          name: monorepo-build-artifacts-${{ github.sha }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}
           path: |
             apps/**/dist
 
