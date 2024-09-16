@@ -82,5 +82,13 @@ jobs:
           BUILD_ID: ${{ github.run_id }}
         run: pnpm build
 
+      - name: Upload monorepo artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monorepo-build-artifacts-${{ github.sha }}
+          path: |
+            apps/**/dist
+
       - name: Test monorepo
         run: pnpm test
