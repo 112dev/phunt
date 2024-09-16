@@ -88,7 +88,7 @@ jobs:
         with:
           name: monorepo-build-artifacts-${{ github.sha }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}
           path: |
-            apps/**/dist
+            apps/phunt-cli/**/dist/
 
       - name: Test monorepo
         run: pnpm test
