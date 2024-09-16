@@ -91,5 +91,4 @@ jobs:
         with:
           name: monorepo-build-artifacts-${{ github.sha }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}
           path: |
-            apps/**/dist
-            packages/**/dist
+            apps/phunt-cli/dist
