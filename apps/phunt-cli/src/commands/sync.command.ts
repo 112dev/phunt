@@ -12,7 +12,6 @@ import {
   IndexDestinationDirectoryService,
   initDb,
   LocalFileSystemFileSearchService,
-  UnresolvableStrategy,
   WinstonBasedLogger,
 } from "@112dev/phunt-core";
 import { objectContainsCodeProperty } from "@112dev/phunt-typeguards";
@@ -25,7 +24,6 @@ type SyncCommandOptions = {
   destPattern: string;
   includeDuplicates: boolean;
   duplicateFilterStrategy: "checksum";
-  unresolvableStrategy: "dir" | "exclude";
 };
 
 const syncCommandAction = async (
@@ -152,7 +150,6 @@ const syncFiles = async (
     includeDuplicates: boolean;
     duplicateFilterStrategy: DuplicateFilterStrategy;
     removeSrc: boolean;
-    unresolvableStrategy: UnresolvableStrategy;
   },
   fileSyncService: FileSyncService,
 ): Promise<void> => {
@@ -164,7 +161,6 @@ const syncFiles = async (
       duplicateFilterStrategy: options.duplicateFilterStrategy,
       includeDuplicates: options.includeDuplicates,
       removeSrc: options.removeSrc,
-      unresolvableStrategy: options.unresolvableStrategy,
     });
   }
 };
@@ -257,23 +253,6 @@ export default function buildSyncCommand(): Command {
       .default("checksum"),
   );
 
-  command.addOption(
-    command
-      .createOption(
-        "--unresolvable-strategy",
-        `
-            Strategy for digital media files lacking sufficient information.
-
-            Available scenarios:
-
-            - dir: Place in a temporary directory
-            - exclude: Exclude from sync
-            `,
-      )
-      .choices(["dir", "exclude"])
-      .default("dir"),
-  );
-
   command.addArgument(
     command.createArgument(
       "<dest>",
@@ -325,7 +304,6 @@ const assertSyncCommandArguments = (
     destPattern,
     includeDuplicates,
     duplicateFilterStrategy,
-    unresolvableStrategy,
   } = options as SyncCommandOptions;
 
   if (
@@ -355,11 +333,5 @@ const assertSyncCommandArguments = (
 
   if (duplicateFilterStrategy !== "checksum") {
     throw new Error('Invalid duplicateFilterStrategy: must be "checksum".');
-  }
-
-  if (!["dir", "exclude"].includes(unresolvableStrategy)) {
-    throw new Error(
-      'Invalid unresolvableStrategy: must be "dir" or "exclude".',
-    );
   }
 };

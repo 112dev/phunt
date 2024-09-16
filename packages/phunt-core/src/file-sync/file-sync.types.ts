@@ -1,5 +1,4 @@
 export type DuplicateFilterStrategy = "checksum";
-export type UnresolvableStrategy = "dir" | "exclude";
 
 export type FileSyncCriteria = {
   srcFile: string;
@@ -8,5 +7,4 @@ export type FileSyncCriteria = {
   destPattern: string;
   includeDuplicates: boolean;
   duplicateFilterStrategy: DuplicateFilterStrategy;
-  unresolvableStrategy: UnresolvableStrategy;
 };

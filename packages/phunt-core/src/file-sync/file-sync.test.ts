@@ -106,7 +106,6 @@ describe("FileSyncService", () => {
         includeDuplicates: true,
         duplicateFilterStrategy: duplicateFilterStrategy,
         srcFile: srcFile,
-        unresolvableStrategy: "dir",
       });
 
       expect(fileOpsMock.readFileAsync).toHaveBeenCalledTimes(2);
