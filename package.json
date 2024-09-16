@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@112dev/phunt-prettier-config": "workspace:*",
-    "@changesets/cli": "^2.27.8",
     "@jest/globals": "^29.7.0",
     "@types/node": "^22.5.4",
     "eslint": "^9.10.0",
