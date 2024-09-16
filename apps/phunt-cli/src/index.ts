@@ -14,7 +14,7 @@ Build Date: __PHUNT_CLI_BUILD_DATE__
 License: __PHUNT_CLI_LICENSE__`);
 
 app.description(
-  "`__PHUNT_CLI_NAME__` helps you organize digital media assets such as digital photos and images.",
+  "__PHUNT_CLI_NAME__ is a command-line tool designed to help users organize digital media assets such as photos and images.",
 );
 
 app.addCommand(buildIndexCommand());

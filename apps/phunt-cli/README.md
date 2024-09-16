@@ -1,6 +1,6 @@
 # phunt-cli
 
-`phunt-cli` is a command-line tool designed to help users organize digital media such as images and photos.
+`phunt-cli` is a command-line tool designed to help users organize digital media assets such as photos and images.
 
 ## How It Works
 
