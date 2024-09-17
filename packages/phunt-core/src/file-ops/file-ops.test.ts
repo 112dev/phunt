@@ -14,6 +14,7 @@ import { ObjectWithCodeProperty } from "@112dev/phunt-typeguards";
 import { FileOps } from "./file-ops";
 import { DateParser } from "../date-parser";
 import { WinstonBasedLogger } from "../logger";
+import { Buffer } from "buffer";
 
 jest.mock("exifreader");
 jest.mock("fs/promises");
@@ -259,6 +260,53 @@ describe("FileOps", () => {
       fileOps.clearReadFileCache();
 
       expect(Reflect.get(fileOps, "readFileCache").size).toBe(0);
+    });
+  });
+
+  describe("FileOps.compareFileBuffersBytePerByte", () => {
+    it("should return true for identical buffers", () => {
+      const buffer1 = Buffer.from([0x01, 0x02, 0x03]);
+      const buffer2 = Buffer.from([0x01, 0x02, 0x03]);
+
+      const result = fileOps.compareFileBuffersBytePerByte(buffer1, buffer2);
+
+      expect(result).toBe(true);
+    });
+
+    it("should return false for different buffers", () => {
+      const buffer1 = Buffer.from([0x01, 0x02, 0x03]);
+      const buffer2 = Buffer.from([0x01, 0x02, 0x04]);
+
+      const result = fileOps.compareFileBuffersBytePerByte(buffer1, buffer2);
+
+      expect(result).toBe(false);
+    });
+
+    it("should return false for buffers with different lengths", () => {
+      const buffer1 = Buffer.from([0x01, 0x02, 0x03]);
+      const buffer2 = Buffer.from([0x01, 0x02]);
+
+      const result = fileOps.compareFileBuffersBytePerByte(buffer1, buffer2);
+
+      expect(result).toBe(false);
+    });
+
+    it("should return true for empty buffers", () => {
+      const buffer1 = Buffer.from([]);
+      const buffer2 = Buffer.from([]);
+
+      const result = fileOps.compareFileBuffersBytePerByte(buffer1, buffer2);
+
+      expect(result).toBe(true);
+    });
+
+    it("should return false when one buffer is empty and the other is not", () => {
+      const buffer1 = Buffer.from([0x01]);
+      const buffer2 = Buffer.from([]);
+
+      const result = fileOps.compareFileBuffersBytePerByte(buffer1, buffer2);
+
+      expect(result).toBe(false);
     });
   });
 });
