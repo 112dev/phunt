@@ -4,34 +4,9 @@
 
 phunt - is a collection of software which can help end users organize digital media such as photos and images.
 
-## Structure
+## Documentation
 
-The current structure of the project is based on monorepo architecture leveraging [Turborepo](https://turbo.build/) to
-handle build tasks.
-
-The structure of the project looks like this:
-
-- `root` - monorepo
-  - `apps` - standalone applications which end users will use
-  - `packages` - internal modular software libraries which help build `apps`
-
-## Build
-
-To build all `apps` and `packages` from source, run the following command from project root:
-
-```
-pnpm build
-```
-
-## Develop
-
-To develop all `apps` and `packages`, run the following command from project root:
-
-```
-pnpm dev
-```
-
-This command will start a daemon which will listen to file changes while develop and rebuild all related projects.
+The project documentation can be found [here](./docs/README.md).
 
 ## License
 
