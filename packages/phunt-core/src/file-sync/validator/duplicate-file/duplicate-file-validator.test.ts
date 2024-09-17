@@ -23,6 +23,7 @@ describe("DuplicateFileValidatorService", () => {
       calculateFileChecksumAsync: jest.fn(),
       compareFileBuffersBytePerByte: jest.fn(),
       getFileExtension: jest.fn(),
+      getFileName: jest.fn(),
     } as unknown as jest.Mocked<FileOps>;
 
     fileSearchServiceMock = {

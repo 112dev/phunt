@@ -93,6 +93,29 @@ export class DuplicateFileValidatorService implements FileSyncValidator {
       fileExtensions: [srcFileExtension],
     });
 
+    const srcFileName = this.fileOps.getFileName(srcFilePath, true);
+
+    /**
+     * Sorts destFilePathsList so that files with the same file name as srcFileName
+     * are prioritized first. This optimization improves the likelihood of finding
+     * duplicates early, as files with matching names are more likely to be duplicates.
+     */
+    destFilePathsList.sort((a: string, b: string): number => {
+      const fileNameA = this.fileOps.getFileName(a, true);
+      const fileNameB = this.fileOps.getFileName(b, true);
+
+      const isAMatch = fileNameA === srcFileName;
+      const isBMatch = fileNameB === srcFileName;
+
+      if (isAMatch && !isBMatch) {
+        return -1;
+      } else if (!isAMatch && isBMatch) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
     for (const destFilePath of destFilePathsList) {
       const destFileBuffer = await this.fileOps.readFileAsync(destFilePath);
 
