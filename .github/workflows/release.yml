@@ -8,6 +8,9 @@ on:
 env:
   DO_NOT_TRACK: 1
 
+permissions:
+  contents: write
+
 jobs:
   build-release:
     runs-on: ubuntu-latest
@@ -72,8 +75,12 @@ jobs:
 
       - name: Extract artifact names and IDs
         run: |
-          # Extract artifact names and IDs
-          jq -r '.artifacts[] | select(.name | startswith("monorepo-release-artifacts-${{ github.sha }}-")) | "\(.name) \(.id)"' artifacts.json > artifact_names_and_ids.txt
+          # Extract artifact names and IDs, stripping the prefix from the name
+          jq -r --arg prefix "monorepo-release-artifacts-${{ github.sha }}-" '
+            .artifacts[] |
+            select(.name | startswith($prefix)) |
+            "\(.name | sub($prefix; "")) \(.id)"
+          ' artifacts.json > artifact_names_and_ids.txt
 
       - name: Check for artifact names and IDs
         run: |
