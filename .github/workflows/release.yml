@@ -70,10 +70,17 @@ jobs:
                -H "Accept: application/vnd.github.v3+json" \
                https://api.github.com/repos/${{ github.repository }}/actions/artifacts > artifacts.json
 
-      - name: Extract artifact IDs
+      - name: Extract artifact names and IDs
         run: |
-          # Use jq to extract artifact IDs that match the pattern
-          jq -r '.artifacts[] | select(.name | startswith("monorepo-release-artifacts-${{ github.sha }}-")) | .id' artifacts.json > artifact_ids.txt
+          # Extract artifact names and IDs
+          jq -r '.artifacts[] | select(.name | startswith("monorepo-release-artifacts-${{ github.sha }}-")) | "\(.name) \(.id)"' artifacts.json > artifact_names_and_ids.txt
+
+      - name: Check for artifact names and IDs
+        run: |
+          if [ ! -s artifact_names_and_ids.txt ]; then
+            echo "No artifacts found for the given pattern"
+            exit 1
+          fi
 
       - name: Download artifacts
         run: |
@@ -81,13 +88,13 @@ jobs:
           mkdir -p dist
 
           # Download each artifact
-          while read -r artifact_id; do
-            echo "Downloading artifact ID: $artifact_id"
+          while read -r artifact_name artifact_id; do
+            echo "Downloading artifact: $artifact_name"
             curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                  -H "Accept: application/vnd.github.v3+json" \
                  https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id/zip \
-                 -o dist/artifact-$artifact_id.zip
-          done < artifact_ids.txt
+                 -o dist/"$artifact_name.zip"
+          done < artifact_names_and_ids.txt
 
       - name: List files in dist directory # Used for debug purposes
         run: ls -R dist
