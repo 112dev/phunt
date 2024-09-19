@@ -1,0 +1,101 @@
+name: "phunt: Release Workflow"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  DO_NOT_TRACK: 1
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        node-version: [ 20.x, 22.x ]
+        architecture: [ x64, arm64, arm ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: build-${{ runner.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}-turbo-${{ github.sha }}
+          restore-keys: |
+            build-${{ runner.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}-turbo-
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install monorepo dependencies
+        run: pnpm install
+
+      - name: Build monorepo
+        env:
+          BUILD_ID: ${{ github.run_id }}
+        run: pnpm build
+
+      - name: Upload monorepo release artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monorepo-release-artifacts-${{ github.sha }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}
+          path: |
+            apps/phunt-cli/dist
+
+  create-release:
+    runs-on: ubuntu-latest
+
+    needs: build-release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List artifacts
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/${{ github.repository }}/actions/artifacts > artifacts.json
+
+      - name: Extract artifact IDs
+        run: |
+          # Use jq to extract artifact IDs that match the pattern
+          jq -r '.artifacts[] | select(.name | startswith("monorepo-release-artifacts-${{ github.sha }}-")) | .id' artifacts.json > artifact_ids.txt
+
+      - name: Download artifacts
+        run: |
+          # Create a directory to store artifacts
+          mkdir -p dist
+
+          # Download each artifact
+          while read -r artifact_id; do
+            echo "Downloading artifact ID: $artifact_id"
+            curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id/zip \
+                 -o dist/artifact-$artifact_id.zip
+          done < artifact_ids.txt
+
+      - name: List files in dist directory # Used for debug purposes
+        run: ls -R dist
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./dist/*
+          draft: true
