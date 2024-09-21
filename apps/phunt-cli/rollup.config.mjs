@@ -18,6 +18,9 @@ const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
  */
 const rollupOptions = {
   ...baseOptions,
+  output: {
+    file: `dist/phunt-cli.js`,
+  },
   plugins: [
     cleanOnBuildStart("dist"),
     copy({
