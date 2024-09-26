@@ -18,8 +18,6 @@ export const createSqliteConnection = (
   const db = new Database(params.file, {
     fileMustExist: !params.options.createDatabaseIfNotExists,
     readonly: params.options.readonly,
-    nativeBinding:
-      "node_modules/better-sqlite3/build/Release/better_sqlite3.node",
   });
 
   const connectionId = params.id ?? randomUUID();

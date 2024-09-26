@@ -4,9 +4,6 @@
   "private": true,
   "files": [
     "plugins/clean-on-build-start.mjs",
-    "base-options.mjs",
-    "base-plugins.mjs",
-    "base-plugins-typescript.mjs",
     "functions.mjs"
   ],
   "dependencies": {
