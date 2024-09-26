@@ -50,6 +50,13 @@ jobs:
           BUILD_ID: ${{ github.run_id }}
         run: pnpm build
 
+      - name: Remove non production dependencies
+        run: pnpm prune --prod
+
+      - name: Copy node_modules to dist
+        run: |
+          cp -R apps/phunt-cli/node_modules apps/phunt-cli/dist/node_modules
+
       - name: Upload monorepo release artifacts
         if: always()
         uses: actions/upload-artifact@v4
