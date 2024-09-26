@@ -7,6 +7,7 @@ on:
 
 env:
   DO_NOT_TRACK: 1
+  HUSKY: 0
 
 permissions:
   contents: write

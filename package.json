@@ -12,7 +12,7 @@
     "test": "turbo test",
     "format": "turbo format",
     "format:root": "prettier --write --ignore-unknown .",
-    "prepare": "husky"
+    "prepare": "node .husky/install.mjs"
   },
   "devDependencies": {
     "@112dev/phunt-prettier-config": "workspace:*",
