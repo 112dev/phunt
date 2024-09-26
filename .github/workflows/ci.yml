@@ -84,11 +84,3 @@ jobs:
 
       - name: Test monorepo
         run: pnpm test
-
-      - name: Upload monorepo build artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monorepo-build-artifacts-${{ github.sha }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}
-          path: |
-            apps/phunt-cli/dist
