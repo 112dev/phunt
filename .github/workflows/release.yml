@@ -53,7 +53,7 @@ jobs:
 
       - name: Remove non production dependencies
         run: |
-          pnpm prune --prod
+          rm -R apps/phunt-cli/node_modules
           pnpm install --prod
 
       - name: Copy node_modules to dist
