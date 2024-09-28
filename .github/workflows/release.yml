@@ -58,12 +58,7 @@ jobs:
 
       - name: Copy node_modules to dist
         run: |
-          ls -hal apps/phunt-cli
-          ls -hal apps/phunt-cli/node_modules
-          ls -hal apps/phunt-cli/dist
           cp -RL apps/phunt-cli/node_modules apps/phunt-cli/dist/node_modules
-          ls -hal apps/phunt-cli/dist
-          ls -hal apps/phunt-cli/dist/node_modules
 
       - name: Upload monorepo release artifacts
         if: always()
