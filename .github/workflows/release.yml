@@ -52,7 +52,9 @@ jobs:
         run: pnpm build
 
       - name: Remove non production dependencies
-        run: pnpm prune --prod
+        run: |
+          pnpm prune --prod
+          pnpm install --prod
 
       - name: Copy node_modules to dist
         run: |
