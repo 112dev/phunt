@@ -61,7 +61,7 @@ jobs:
           ls -hal apps/phunt-cli
           ls -hal apps/phunt-cli/node_modules
           ls -hal apps/phunt-cli/dist
-          cp -R apps/phunt-cli/node_modules apps/phunt-cli/dist/node_modules
+          cp -RL apps/phunt-cli/node_modules apps/phunt-cli/dist/node_modules
           ls -hal apps/phunt-cli/dist
           ls -hal apps/phunt-cli/dist/node_modules
 
