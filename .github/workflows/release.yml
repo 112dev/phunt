@@ -55,6 +55,6 @@ jobs:
         run: pnpm test
 
       - name: Publish monorepo packages
-        run: pnpm publish -r
+        run: pnpm publish -r --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
