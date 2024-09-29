@@ -81,10 +81,9 @@ const initializeDatabase = (dest: string) => {
 export default function buildIndexCommand(): Command {
   const command = new Command("index");
 
-  command.description(`
-    Indexes digital media files in the specified destination directory.
-    This command is useful when we suspect that the directory index is not in sync with the directory contents.
-  `);
+  command.description(
+    `Indexes digital media files in the specified destination directory. This command is useful when we suspect that the directory index is not in sync with the directory contents.`,
+  );
 
   command.option(
     "--ext <extensions...>",
