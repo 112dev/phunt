@@ -7,6 +7,9 @@
   "bin": {
     "phunt": "./dist/phunt-cli.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "rollup --config rollup.config.mjs --watch",
     "build": "rollup --config rollup.config.mjs",
