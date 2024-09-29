@@ -1,7 +1,6 @@
 {
   "name": "@112dev/phunt-prettier-config",
   "version": "1.0.0",
-  "private": true,
   "files": [
     "standard.mjs"
   ]

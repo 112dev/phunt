@@ -11,6 +11,7 @@ env:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   build-release:
@@ -18,9 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
-        node-version: [ 20.x, 22.x ]
-        architecture: [ x64, arm64, arm ]
+        node-version: [ 20.x ]
 
     steps:
       - name: Checkout repository
@@ -41,6 +40,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
           cache: "pnpm"
 
       - name: Install monorepo dependencies
@@ -51,23 +51,13 @@ jobs:
           BUILD_ID: ${{ github.run_id }}
         run: pnpm build
 
-      - name: Remove non production dependencies
-        run: |
-          rm -R apps/phunt-cli/node_modules
-          pnpm install --prod
+      - name: Test monorepo
+        run: pnpm test
 
-      - name: Copy node_modules to dist
-        run: |
-          cp -RL apps/phunt-cli/node_modules apps/phunt-cli/dist/node_modules
-
-      - name: Upload monorepo release artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monorepo-release-artifacts-${{ github.sha }}-${{ matrix.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}
-          include-hidden-files: true
-          path: |
-            apps/phunt-cli/dist
+      - name: Publish monorepo packages
+        run: changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   create-release:
     runs-on: ubuntu-latest
@@ -78,49 +68,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: List artifacts
-        run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               https://api.github.com/repos/${{ github.repository }}/actions/artifacts > artifacts.json
-
-      - name: Extract artifact names and IDs
-        run: |
-          # Extract artifact names and IDs, stripping the prefix from the name
-          jq -r --arg prefix "monorepo-release-artifacts-${{ github.sha }}-" '
-            .artifacts[] |
-            select(.name | startswith($prefix)) |
-            "\(.name | sub($prefix; "")) \(.id)"
-          ' artifacts.json > artifact_names_and_ids.txt
-
-      - name: Check for artifact names and IDs
-        run: |
-          if [ ! -s artifact_names_and_ids.txt ]; then
-            echo "No artifacts found for the given pattern"
-            exit 1
-          fi
-
-      - name: Download artifacts
-        run: |
-          # Create a directory to store artifacts
-          mkdir -p dist
-
-          # Download each artifact
-          while read -r artifact_name artifact_id; do
-            echo "Downloading artifact: $artifact_name"
-            curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                 -H "Accept: application/vnd.github.v3+json" \
-                 https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id/zip \
-                 -o dist/"$artifact_name.zip"
-          done < artifact_names_and_ids.txt
-
-      - name: List files in dist directory # Used for debug purposes
-        run: ls -R dist
-
       - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            ./dist/*
           draft: true

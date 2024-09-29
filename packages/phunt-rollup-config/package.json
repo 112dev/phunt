@@ -1,7 +1,6 @@
 {
   "name": "@112dev/phunt-rollup-config",
   "version": "1.0.0",
-  "private": true,
   "files": [
     "plugins/clean-on-build-start.mjs",
     "functions.mjs"

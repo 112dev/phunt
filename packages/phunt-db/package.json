@@ -1,13 +1,16 @@
 {
   "name": "@112dev/phunt-db",
   "version": "1.0.0",
-  "private": true,
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
     }
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc -p tsconfig.lib.json",
