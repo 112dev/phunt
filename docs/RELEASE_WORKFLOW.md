@@ -1,18 +1,5 @@
 # Releasing a New Version
 
-## The Process
-
-The release process is designed to be straightforward and efficient:
-
-1. **Create a milestone**: Define the scope of the release by setting up a milestone in the project.
-2. **Complete the milestone**: Once all tasks or issues tied to the milestone are addressed, proceed with the release.
-3. **Version the release**: Set the new version number and tag the release appropriately.
-4. **Trigger the release workflow**: Kick off the semi-automated GitHub Actions workflow to finalize and publish the
-   release.
-
-This process ensures a structured, automated approach, minimizing manual intervention while maintaining control over the
-release.
-
 ## Versioning
 
 The project uses [Semantic Versioning](https://semver.org/) to ensure clear and predictable version increments:
@@ -30,3 +17,30 @@ uses [Changesets](https://github.com/changesets/changesets/tree/main) library.
 Changesets simplifies changelog management and versioning by providing a Git-integrated interface to track updates,
 manage version bumps, and publish packages. Its bulk handling of version updates ensures that releases are smooth and
 well-documented without unnecessary overhead, allowing us to focus on shipping improvements faster.
+
+## Release Process
+
+The release process is designed to be simple and efficient. Follow these steps:
+
+1. **Version Bump**
+   Increment the versions of affected packages following [Semantic Versioning](https://semver.org/) guidelines:
+   - For **pre-releases**, manually increment the "pre-release" number.
+   - For **regular releases**, use the `changeset` CLI to automate version bumping.
+
+2. **Document Changes**
+   Use the `changeset` CLI to document all changes introduced in the release.
+
+3. **Tag the Release**
+   Tag the main branch with the following pattern:
+   `r{YYYYMMDD}_{increment}`
+
+   Example tags: `r20240929_01`, `r20240929_02`, `r20240930_01`
+
+4. **Push the Tag**
+   Push the newly created release tag to GitHub.
+
+5. **Create GitHub Release**
+   From the pushed release tag, create a new GitHub Release.
+
+Once the release is created, the **GitHub Release Workflow** will automatically trigger, building the project and
+publishing all affected packages to the npm registry.
