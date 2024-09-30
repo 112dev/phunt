@@ -23,5 +23,8 @@
       "persistent": true
     }
   },
+  "globalPassThroughEnv": [
+    "BUILD_ID"
+  ],
   "globalDependencies": []
 }
