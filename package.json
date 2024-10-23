@@ -15,17 +15,17 @@
     "prepare": "node .husky/install.mjs"
   },
   "devDependencies": {
+    "@112dev/phunt-prettier-config": "workspace:*",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
-    "turbo": "^2.1.2",
-    "@112dev/phunt-prettier-config": "workspace:*",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "turbo": "^2.2.3"
   },
   "packageManager": "pnpm@9.10.0",
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
-    "@changesets/cli": "^2.27.8"
+    "@changesets/cli": "^2.27.9"
   }
 }
