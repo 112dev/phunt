@@ -4,7 +4,7 @@ import {
   SqliteQueryParams,
 } from "@112dev/phunt-contracts";
 import Database from "better-sqlite3";
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 
 type CreateSqliteConnectionParams = {
   file: string | Buffer;

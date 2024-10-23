@@ -59,7 +59,7 @@ const rollupOptions = {
       ignoreTryCatch: false,
     }),
     typescript({
-      tsconfig: "tsconfig.lib.json",
+      tsconfig: "tsconfig.build.json",
       moduleResolution: "bundler",
     }),
   ],

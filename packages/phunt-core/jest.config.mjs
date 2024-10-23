@@ -1,3 +1,9 @@
-import baseJestConfig from "@112dev/phunt-jest-config/base.mjs";
-
-export default baseJestConfig;
+/**
+ * @type {import("jest").Config}
+ */
+export default {
+  verbose: true,
+  preset: "ts-jest",
+  testEnvironment: "node",
+  passWithNoTests: true,
+};
