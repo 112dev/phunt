@@ -3,11 +3,8 @@
   "version": "1.0.0-beta.1",
   "license": "Apache-2.0",
   "files": [
-    "base.json"
+    "node.tsconfig.json"
   ],
-  "dependencies": {
-    "@tsconfig/recommended": "^1.0.7"
-  },
   "peerDependencies": {
     "typescript": "^5.6.3"
   }
