@@ -19,7 +19,6 @@
     "@112dev/phunt-eslint-config": "workspace:*",
     "@112dev/phunt-prettier-config": "workspace:*",
     "@112dev/phunt-typescript-config": "workspace:*",
-    "@112dev/phunt-jest-config": "workspace:*",
     "rollup": "^4.21.2",
     "@112dev/phunt-rollup-config": "workspace:*",
     "@rollup/plugin-alias": "^5.1.0",
@@ -30,7 +29,12 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.1.1",
-    "@112dev/phunt-contracts": "workspace:*"
+    "@112dev/phunt-contracts": "workspace:*",
+    "typescript": "^5.6.3",
+    "prettier": "^3.3.3",
+    "eslint": "^9.13.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5"
   },
   "dependencies": {
     "commander": "^12.1.0",

@@ -24,6 +24,7 @@ The release process is designed to be simple and efficient. Follow these steps:
 
 1. **Version Bump**
    Increment the versions of affected packages following [Semantic Versioning](https://semver.org/) guidelines:
+
    - For **pre-releases**, manually increment the "pre-release" number.
    - For **regular releases**, use the `changeset` CLI to automate version bumping.
 

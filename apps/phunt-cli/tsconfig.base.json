@@ -1,0 +1,7 @@
+{
+  "extends": "@112dev/phunt-typescript-config/base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts"]
+}

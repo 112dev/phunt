@@ -29,7 +29,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.lib.json",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write --ignore-unknown ."
   },
