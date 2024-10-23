@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import { DefaultMediaFileExtensions } from "../defaults";
-import * as path from "path";
-import { promises as fs, Stats } from "fs";
+import * as path from "node:path";
+import { promises as fs, Stats } from "node:fs";
 import {
   DateParser,
   DuplicateFilterStrategy,

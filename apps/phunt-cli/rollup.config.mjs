@@ -5,8 +5,8 @@ import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
-import { readFileSync } from "fs";
-import { env } from "process";
+import { readFileSync } from "node:fs";
+import { env } from "node:process";
 
 const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
 
