@@ -68,28 +68,28 @@ The structure of the project looks like this:
 
 ## Setting up Local Development Environment
 
-To get started with local development, ensure you have **Git**, **Node.js**, and **pnpm** installed. Check the
+To get started with local development, ensure you have **Git**, **Node.js**, and **yarn** installed. Check the
 package.json `engines` section for the supported versions.
 
 Once you've cloned the repository, install the dependencies by running the following command from the project root:
 
 ```shell
-pnpm install
+yarn install
 ```
 
 To build all apps and packages from source, run the following command from project root:
 
 ```shell
-pnpm build
+yarn build
 ```
 
 Optionally, you could start a daemon which will listen to the changes you make and rebuild automatically the modified
 packages. To start the daemon, run the following command from project root:
 
 ```shell
-pnpm dev
+yarn dev
 ```
 
-Note: The `pnpm dev` command is currently experimental and not all packages support it.
+Note: The `yarn dev` command is currently experimental and not all packages support it.
 
 For other useful commands check package.json scripts section.
