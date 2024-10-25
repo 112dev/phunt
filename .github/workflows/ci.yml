@@ -30,17 +30,17 @@ jobs:
           restore-keys: |
             lint-${{ runner.os }}-${{ matrix.node-version }}-turbo-
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
 
-      - name: Install Yarn
-        run: npm install -g yarn
-
       - name: Install monorepo dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Lint monorepo
         run: yarn lint
@@ -65,17 +65,17 @@ jobs:
           restore-keys: |
             build-${{ runner.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}-turbo-
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
 
-      - name: Install Yarn
-        run: npm install -g yarn
-
       - name: Install monorepo dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Build monorepo
         env:
