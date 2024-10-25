@@ -4,6 +4,10 @@
 node_modules
 .pnp
 .pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
 
 # Local env files
 .env

@@ -1,6 +1,7 @@
 {
   "name": "@112dev/phunt-core",
   "version": "1.0.0-beta.1",
+  "license": "Apache-2.0",
   "exports": {
     ".": {
       "types": "./src/index.ts",
@@ -24,16 +25,16 @@
     ]
   },
   "devDependencies": {
+    "@112dev/phunt-contracts": "workspace:*",
     "@112dev/phunt-eslint-config": "workspace:*",
     "@112dev/phunt-prettier-config": "workspace:*",
     "@112dev/phunt-typescript-config": "workspace:*",
-    "@112dev/phunt-contracts": "workspace:*",
-    "typescript": "^5.6.3",
-    "eslint": "^9.13.0",
-    "prettier": "^3.3.3",
-    "jest": "^29.7.0",
     "@jest/globals": "^29.7.0",
-    "ts-jest": "^29.2.5"
+    "eslint": "^9.13.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "@112dev/phunt-db": "workspace:*",
