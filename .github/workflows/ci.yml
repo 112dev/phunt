@@ -30,20 +30,20 @@ jobs:
           restore-keys: |
             lint-${{ runner.os }}-${{ matrix.node-version }}-turbo-
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: "yarn"
+
+      - name: Install Yarn
+        run: npm install -g yarn
 
       - name: Install monorepo dependencies
-        run: pnpm install
+        run: yarn install
 
       - name: Lint monorepo
-        run: pnpm lint
+        run: yarn lint
 
   build:
     runs-on: ubuntu-latest
@@ -65,22 +65,22 @@ jobs:
           restore-keys: |
             build-${{ runner.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}-turbo-
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: "yarn"
+
+      - name: Install Yarn
+        run: npm install -g yarn
 
       - name: Install monorepo dependencies
-        run: pnpm install
+        run: yarn install
 
       - name: Build monorepo
         env:
           BUILD_ID: ${{ github.run_id }}
-        run: pnpm build
+        run: yarn build
 
       - name: Test monorepo
-        run: pnpm test
+        run: yarn test

@@ -33,28 +33,28 @@ jobs:
           restore-keys: |
             build-${{ runner.os }}-${{ matrix.node-version }}-${{ matrix.architecture }}-turbo-
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: "https://registry.npmjs.org"
-          cache: "pnpm"
+          cache: "yarn"
+
+      - name: Install Yarn
+        run: npm install -g yarn
 
       - name: Install monorepo dependencies
-        run: pnpm install
+        run: yarn install
 
       - name: Build monorepo
         env:
           BUILD_ID: ${{ github.run_id }}
-        run: pnpm build
+        run: yarn build
 
       - name: Test monorepo
-        run: pnpm test
+        run: yarn test
 
       - name: Publish monorepo packages
-        run: pnpm publish -r --no-git-checks --access public
+        run: yarn workspaces foreach --topological --no-private publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
