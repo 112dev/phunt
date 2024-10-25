@@ -68,10 +68,12 @@ The structure of the project looks like this:
 
 ## Setting up Local Development Environment
 
-To get started with local development, ensure you have **Git**, **Node.js**, and **yarn** installed. Check the
-package.json `engines` section for the supported versions.
+To get started with local development, ensure you have **Git** and **Node.js** installed. You can verify the compatible
+Node.js versions in the `engines` section of `package.json`.
 
-Once you've cloned the repository, install the dependencies by running the following command from the project root:
+After cloning the repository, activate Corepack by running `corepack enable` to ensure the appropriate package manager
+version (as specified in the root package.json) is installed. Then, navigate to the project root and install
+dependencies by running:
 
 ```shell
 yarn install
