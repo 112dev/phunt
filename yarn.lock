@@ -8802,6 +8802,7 @@ __metadata:
     husky: "npm:^9.1.6"
     lint-staged: "npm:^15.2.10"
     prettier: "npm:^3.3.3"
+    rimraf: "npm:^6.0.1"
     turbo: "npm:^2.2.3"
   languageName: unknown
   linkType: soft
