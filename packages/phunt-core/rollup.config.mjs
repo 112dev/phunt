@@ -1,9 +1,9 @@
 import { assembleRollupConfig } from "@112dev/phunt-rollup-config/functions.mjs";
 import { cleanOnBuildStart } from "@112dev/phunt-rollup-config/plugins/clean-on-build-start.mjs";
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import { readFileSync } from "node:fs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 
 const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
 
@@ -36,10 +36,18 @@ const rollupOptions = {
   },
   plugins: [
     cleanOnBuildStart("dist"),
-    resolve(),
-    commonjs(),
+    nodeResolve({
+      preferBuiltins: false,
+    }),
+    commonjs({
+      ignoreTryCatch: false,
+    }),
     typescript({
       tsconfig: "tsconfig.build.json",
+      compilerOptions: {
+        moduleResolution: "NodeNext",
+        module: "NodeNext",
+      },
     }),
   ],
   external: Object.keys(pkg.dependencies || {}), // https://github.com/rollup/rollup-plugin-node-resolve/issues/77

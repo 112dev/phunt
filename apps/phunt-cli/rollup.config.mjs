@@ -60,7 +60,10 @@ const rollupOptions = {
     }),
     typescript({
       tsconfig: "tsconfig.build.json",
-      moduleResolution: "bundler",
+      compilerOptions: {
+        moduleResolution: "NodeNext",
+        module: "NodeNext",
+      },
     }),
   ],
   external: Object.keys(pkg.dependencies || {}), // https://github.com/rollup/rollup-plugin-node-resolve/issues/77

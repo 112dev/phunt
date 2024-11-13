@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "target": "ES2022",
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
-    "noUncheckedIndexedAccess": true,
-    "lib": ["ES2022"]
+    "noUncheckedIndexedAccess": true
   }
 }

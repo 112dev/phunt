@@ -2,8 +2,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
-    "declaration": true,
-    "moduleResolution": "bundler"
+    "declaration": true
   },
   "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"]
 }
