@@ -2,31 +2,26 @@
   "name": "@112dev/phunt-contracts",
   "version": "1.0.0-beta.2",
   "license": "Apache-2.0",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/index.d.ts"
     },
     "./db": {
-      "types": "./src/db.ts",
-      "default": "./dist/db.js"
+      "types": "./dist/db.d.ts"
     },
     "./file-search": {
-      "types": "./src/file-search.ts",
-      "default": "./dist/file-search.js"
+      "types": "./dist/file-search.d.ts"
     },
     "./file": {
-      "types": "./src/file.ts",
-      "default": "./dist/file.js"
+      "types": "./dist/file.d.ts"
     },
     "./logger": {
-      "types": "./src/logger.ts",
-      "default": "./dist/logger.js"
+      "types": "./dist/logger.d.ts"
     }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",

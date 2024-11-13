@@ -1,12 +1,9 @@
 import { assembleRollupConfig } from "@112dev/phunt-rollup-config/functions.mjs";
 import { cleanOnBuildStart } from "@112dev/phunt-rollup-config/plugins/clean-on-build-start.mjs";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import json from "@rollup/plugin-json";
-import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
-import replace from "@rollup/plugin-replace";
 import { readFileSync } from "node:fs";
-import { env } from "node:process";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 
 const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
 
@@ -15,46 +12,33 @@ const pkg = JSON.parse(readFileSync("./package.json", "utf-8"));
  */
 const rollupOptions = {
   input: "src/index.ts",
-  output: {
-    file: `dist/phunt-cli.js`,
-    format: "cjs",
-    generatedCode: "es2015",
-    sourcemap: true,
-  },
+  output: [
+    {
+      dir: "dist",
+      format: "es",
+      preserveModules: true,
+      entryFileNames: "[name].mjs",
+      sourcemap: true,
+    },
+    {
+      dir: "dist",
+      format: "cjs",
+      preserveModules: true,
+      entryFileNames: "[name].cjs",
+      sourcemap: true,
+    },
+  ],
   strictDeprecations: true,
   treeshake: {
     moduleSideEffects: false,
     propertyReadSideEffects: false,
     tryCatchDeoptimization: false,
   },
-  onwarn: (warning, defaultHandler) => {
-    if (warning.code === "CIRCULAR_DEPENDENCY") {
-      return; // Suppress circular dependency warnings.
-    }
-    defaultHandler(warning);
-  },
   plugins: [
     cleanOnBuildStart("dist"),
-    replace({
-      values: {
-        __PHUNT_CLI_NAME__: () => {
-          return pkg.name.startsWith("@") ? pkg.name.split("/")[1] : pkg.name;
-        },
-        __PHUNT_CLI_VERSION__: pkg.version,
-        __PHUNT_CLI_LICENSE__: pkg.license,
-        __PHUNT_CLI_BUILD_ID__: () => {
-          return env["BUILD_ID"] ?? "unknown";
-        },
-        __PHUNT_CLI_BUILD_DATE__: () => {
-          return new Date().toUTCString();
-        },
-      },
-      preventAssignment: true,
-    }),
     nodeResolve({
       preferBuiltins: false,
     }),
-    json(),
     commonjs({
       ignoreTryCatch: false,
     }),
