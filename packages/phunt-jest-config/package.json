@@ -1,0 +1,11 @@
+{
+  "name": "@112dev/phunt-jest-config",
+  "version": "1.0.0-beta.1",
+  "license": "Apache-2.0",
+  "files": [
+    "base.mjs"
+  ],
+  "peerDependencies": {
+    "jest": "^29.7.0"
+  }
+}

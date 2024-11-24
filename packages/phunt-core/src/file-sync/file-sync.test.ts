@@ -1,15 +1,12 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import {
-  SqliteConnection,
-  FileExifData,
-  FileStats,
-  FileSearchService,
-} from "@112dev/phunt-contracts";
-import { FileIndexTableDbService } from "../db/file-index";
-import { DateParser } from "../date-parser";
-import { FileOps } from "../file-ops";
-import { WinstonBasedLogger } from "../logger";
-import { FileSyncService } from "./file-sync";
+import { SqliteConnection } from "@112dev/phunt-contracts/db";
+import { FileExifData, FileStats } from "@112dev/phunt-contracts/file";
+import { FileSearchService } from "@112dev/phunt-contracts/file-search";
+import { FileIndexTableDbService } from "../db/file-index.js";
+import { DateParser } from "../date-parser/date-parser.js";
+import { FileOps } from "../file-ops/file-ops.js";
+import { WinstonBasedLogger } from "../logger/winston-logger.js";
+import { FileSyncService } from "./file-sync.js";
 
 describe("FileSyncService", () => {
   let loggerMock: jest.Mocked<WinstonBasedLogger>;

@@ -8,10 +8,10 @@ import {
   FileExifData,
   FileMetadata,
   FileStats,
-  Logger,
   ShaAlgorithm,
-} from "@112dev/phunt-contracts";
-import { DateParser } from "../date-parser/date-parser";
+} from "@112dev/phunt-contracts/file";
+import { Logger } from "@112dev/phunt-contracts/logger";
+import { DateParser } from "../date-parser/date-parser.js";
 import { objectContainsCodeProperty } from "@112dev/phunt-typeguards";
 
 type FileOpsParams = {

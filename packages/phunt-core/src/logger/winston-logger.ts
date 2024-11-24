@@ -1,4 +1,4 @@
-import { Logger, LogLevel } from "@112dev/phunt-contracts";
+import { Logger, LogLevel } from "@112dev/phunt-contracts/logger";
 import winston from "winston";
 
 export class WinstonBasedLogger implements Logger {

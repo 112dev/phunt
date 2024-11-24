@@ -1,24 +1,23 @@
 import { describe, it, jest, beforeEach, expect } from "@jest/globals";
 import * as fs from "fs/promises";
-import { LocalFileSystemFileSearchService } from "../file-search";
-import { WinstonBasedLogger } from "../logger";
+import { LocalFileSystemFileSearchService } from "../file-search/file-search.js";
+import { WinstonBasedLogger } from "../logger/winston-logger.js";
+import { FileChecksum, FileMetadata } from "@112dev/phunt-contracts/file";
+import { FileSearchResult } from "@112dev/phunt-contracts/file-search";
+import { Logger } from "@112dev/phunt-contracts/logger";
+import { SqliteConnection } from "@112dev/phunt-contracts/db";
+import { DateParser } from "../date-parser/date-parser.js";
+import { FileIndexRecord, FileIndexTableDbService } from "../db/file-index.js";
+import { FileOps } from "../file-ops/file-ops.js";
 import {
-  FileChecksum,
-  FileMetadata,
-  FileSearchResult,
-  Logger,
-  SqliteConnection,
-} from "@112dev/phunt-contracts";
-import { DateParser } from "../date-parser";
-import { FileIndexRecord, FileIndexTableDbService } from "../db/file-index";
-import { FileOps } from "../file-ops";
-import { IndexDestinationDirectoryService } from "./index-dest-dir";
-import { FileIndexCriteria } from "./index-dest-dir.types";
+  FileIndexCriteria,
+  IndexDestinationDirectoryService,
+} from "./index-dest-dir.js";
 
 jest.mock("fs/promises");
-jest.mock("../db/file-index");
-jest.mock("../file-search");
-jest.mock("../file-ops");
+jest.mock("../db/file-index.js");
+jest.mock("../file-search/file-search.js");
+jest.mock("../file-ops/file-ops.js");
 
 describe("IndexDestinationDirectoryService.indexAsync", () => {
   const logger: Logger = new WinstonBasedLogger();

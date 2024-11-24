@@ -6,7 +6,7 @@ import {
   beforeEach,
   afterEach,
 } from "@jest/globals";
-import { LogLevel } from "@112dev/phunt-contracts";
+import { LogLevel } from "@112dev/phunt-contracts/logger";
 import { WinstonBasedLogger } from "./winston-logger";
 
 describe("WinstonBasedLogger", () => {

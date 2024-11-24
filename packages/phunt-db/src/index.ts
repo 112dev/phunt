@@ -2,7 +2,7 @@ import {
   SqliteConnection,
   SqliteConnectionOptions,
   SqliteQueryParams,
-} from "@112dev/phunt-contracts";
+} from "@112dev/phunt-contracts/db";
 import Database from "better-sqlite3";
 import { randomUUID } from "node:crypto";
 

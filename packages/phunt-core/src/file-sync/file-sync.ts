@@ -1,14 +1,22 @@
-import { FileSyncCriteria } from "./file-sync.types";
 import path from "path";
-import { FileSyncValidatorService } from "./validator/validator";
-import { DuplicateErrorDuplicateFileValidatorService } from "./validator/duplicate-file/duplicate-file-validator";
-import { FileIndexRecord, FileIndexTableDbService } from "../db";
-import {
-  Logger,
-  FileMetadata,
-  FileSearchService,
-} from "@112dev/phunt-contracts";
-import { FileOps } from "../file-ops";
+import { FileSyncValidatorService } from "./validator/validator.js";
+import { DuplicateErrorDuplicateFileValidatorService } from "./validator/duplicate-file/duplicate-file-validator.js";
+import { FileIndexRecord, FileIndexTableDbService } from "../db/file-index.js";
+import { Logger } from "@112dev/phunt-contracts/logger";
+import { FileMetadata } from "@112dev/phunt-contracts/file";
+import { FileSearchService } from "@112dev/phunt-contracts/file-search";
+import { FileOps } from "../file-ops/file-ops.js";
+
+export type DuplicateFilterStrategy = "checksum" | "bpb";
+
+export type FileSyncCriteria = {
+  srcFile: string;
+  destDir: string;
+  removeSrc: boolean;
+  destPattern: string;
+  includeDuplicates: boolean;
+  duplicateFilterStrategy: DuplicateFilterStrategy;
+};
 
 type FileSyncServiceParams = {
   readonly fileOps: FileOps;

@@ -2,15 +2,39 @@
   "name": "@112dev/phunt-core",
   "version": "1.0.0-beta.1",
   "license": "Apache-2.0",
+  "type": "module",
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
+    "./date-parser": {
+      "types": "./dist/date-parser/date-parser.d.ts",
+      "default": "./dist/date-parser/date-parser.js"
+    },
+    "./db": {
+      "types": "./dist/db/index.d.ts",
+      "default": "./dist/db/index.js"
+    },
+    "./file-ops": {
+      "types": "./dist/file-ops/file-ops.d.ts",
+      "default": "./dist/file-ops/file-ops.js"
+    },
+    "./file-search": {
+      "types": "./dist/file-search/file-search.d.ts",
+      "default": "./dist/file-search/file-search.js"
+    },
+    "./file-sync": {
+      "types": "./dist/file-sync/file-sync.d.ts",
+      "default": "./dist/file-sync/file-sync.js"
+    },
+    "./index-dest-dir": {
+      "types": "./dist/index-dest-dir/index-dest-dir.d.ts",
+      "default": "./dist/index-dest-dir/index-dest-dir.js"
+    },
+    "./logger": {
+      "types": "./dist/logger/winston-logger.d.ts",
+      "default": "./dist/logger/winston-logger.js"
     }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -27,6 +51,7 @@
   "devDependencies": {
     "@112dev/phunt-contracts": "workspace:*",
     "@112dev/phunt-eslint-config": "workspace:*",
+    "@112dev/phunt-jest-config": "workspace:*",
     "@112dev/phunt-prettier-config": "workspace:*",
     "@112dev/phunt-typescript-config": "workspace:*",
     "@jest/globals": "^29.7.0",
