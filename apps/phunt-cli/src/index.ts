@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import buildSyncCommand from "./commands/sync.command";
-import buildIndexCommand from "./commands/index.command";
+import buildSyncCommand from "./commands/sync.command.js";
+import buildIndexCommand from "./commands/index.command.js";
 
 const app = new Command();
 

@@ -2,9 +2,10 @@
   "name": "@112dev/phunt-db",
   "version": "1.0.0-beta.2",
   "license": "Apache-2.0",
+  "type": "module",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },

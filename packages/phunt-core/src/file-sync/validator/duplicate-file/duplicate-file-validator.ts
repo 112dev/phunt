@@ -1,11 +1,8 @@
-import { FileSyncValidator } from "../validator.types";
-import {
-  DuplicateFilterStrategy,
-  FileSyncCriteria,
-} from "../../file-sync.types";
-import { FileIndexTableDbService } from "../../../db";
-import { FileOps } from "../../../file-ops";
-import { FileSearchService } from "@112dev/phunt-contracts";
+import { FileIndexTableDbService } from "../../../db/file-index.js";
+import { FileOps } from "../../../file-ops/file-ops.js";
+import { FileSearchService } from "@112dev/phunt-contracts/file-search";
+import { DuplicateFilterStrategy, FileSyncCriteria } from "../../file-sync.js";
+import { FileSyncValidator } from "../validator.js";
 
 type DuplicateFileValidatorServiceParams = {
   readonly fileOps: FileOps;

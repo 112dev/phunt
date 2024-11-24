@@ -17,7 +17,7 @@ const rollupOptions = {
   input: "src/index.ts",
   output: {
     file: `dist/phunt-cli.js`,
-    format: "cjs",
+    format: "es",
     generatedCode: "es2015",
     sourcemap: true,
   },
@@ -60,7 +60,8 @@ const rollupOptions = {
     }),
     typescript({
       tsconfig: "tsconfig.build.json",
-      moduleResolution: "bundler",
+      module: "NodeNext",
+      moduleResolution: "NodeNext",
     }),
   ],
   external: Object.keys(pkg.dependencies || {}), // https://github.com/rollup/rollup-plugin-node-resolve/issues/77

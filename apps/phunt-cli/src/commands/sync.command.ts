@@ -1,21 +1,23 @@
 import { Command } from "commander";
-import { DefaultMediaFileExtensions } from "../defaults";
+import { DefaultMediaFileExtensions } from "../defaults.js";
 import * as path from "node:path";
 import { promises as fs, Stats } from "node:fs";
 import {
-  DateParser,
   DuplicateFilterStrategy,
-  FileIndexTableDbService,
-  FileOps,
   FileSyncService,
+} from "@112dev/phunt-core/file-sync";
+import {
+  FileIndexTableDbService,
   getDefaultDatabaseFileName,
-  IndexDestinationDirectoryService,
   initDb,
-  LocalFileSystemFileSearchService,
-  WinstonBasedLogger,
-} from "@112dev/phunt-core";
+} from "@112dev/phunt-core/db";
+import { WinstonBasedLogger } from "@112dev/phunt-core/logger";
+import { DateParser } from "@112dev/phunt-core/date-parser";
+import { FileOps } from "@112dev/phunt-core/file-ops";
+import { LocalFileSystemFileSearchService } from "@112dev/phunt-core/file-search";
+import { IndexDestinationDirectoryService } from "@112dev/phunt-core/index-dest-dir";
 import { objectContainsCodeProperty } from "@112dev/phunt-typeguards";
-import { FileSearchService } from "@112dev/phunt-contracts";
+import { FileSearchService } from "@112dev/phunt-contracts/file-search";
 
 type SyncCommandOptions = {
   ext: string[];

@@ -1,9 +1,12 @@
-import { FileSyncCriteria } from "../file-sync.types";
-import { FileSyncValidator } from "./validator.types";
-import { DuplicateFileValidatorService } from "./duplicate-file/duplicate-file-validator";
-import { FileIndexTableDbService } from "../../db";
-import { FileOps } from "../../file-ops";
-import { FileSearchService } from "@112dev/phunt-contracts";
+import { DuplicateFileValidatorService } from "./duplicate-file/duplicate-file-validator.js";
+import { FileIndexTableDbService } from "../../db/file-index.js";
+import { FileOps } from "../../file-ops/file-ops.js";
+import { FileSearchService } from "@112dev/phunt-contracts/file-search";
+import { FileSyncCriteria } from "../file-sync.js";
+
+export interface FileSyncValidator {
+  validateAsync(criteria: FileSyncCriteria): Promise<void>;
+}
 
 type FileSyncValidatorParams = {
   readonly fileOps: FileOps;

@@ -2,14 +2,15 @@ import { jest, describe, beforeEach, expect, it } from "@jest/globals";
 import {
   DuplicateErrorDuplicateFileValidatorService,
   DuplicateFileValidatorService,
-} from "./duplicate-file-validator";
-import { FileSyncCriteria } from "../../file-sync.types";
+} from "./duplicate-file-validator.js";
 import {
   FileIndexRecord,
   FileIndexTableDbService,
-} from "../../../db/file-index";
-import { FileOps } from "../../../file-ops";
-import { FileChecksum, FileSearchService } from "@112dev/phunt-contracts";
+} from "../../../db/file-index.js";
+import { FileOps } from "../../../file-ops/file-ops.js";
+import { FileSearchService } from "@112dev/phunt-contracts/file-search";
+import { FileChecksum } from "@112dev/phunt-contracts/file";
+import { FileSyncCriteria } from "../../file-sync.js";
 
 describe("DuplicateFileValidatorService", () => {
   let fileOpsMock: jest.Mocked<FileOps>;

@@ -1,8 +1,6 @@
-import { createFileIndexTableIfNotExists } from "./file-index/file-index";
+import { createFileIndexTableIfNotExists } from "./file-index.js";
 import { createSqliteConnection } from "@112dev/phunt-db";
-import { SqliteConnection } from "@112dev/phunt-contracts";
-
-export * from "./file-index/file-index";
+import { SqliteConnection } from "@112dev/phunt-contracts/db";
 
 export const getDefaultDatabaseFileName = (): string => {
   return `phunt.db`;

@@ -9,17 +9,17 @@ import {
 import * as ExifReader from "exifreader";
 import fs from "fs/promises";
 import path from "path";
-import { Logger } from "@112dev/phunt-contracts";
+import { Logger } from "@112dev/phunt-contracts/logger";
 import { ObjectWithCodeProperty } from "@112dev/phunt-typeguards";
-import { FileOps } from "./file-ops";
-import { DateParser } from "../date-parser";
-import { WinstonBasedLogger } from "../logger";
+import { FileOps } from "./file-ops.js";
+import { DateParser } from "../date-parser/date-parser.js";
+import { WinstonBasedLogger } from "../logger/winston-logger.js";
 import { Buffer } from "buffer";
 
 jest.mock("exifreader");
 jest.mock("fs/promises");
 jest.mock("path");
-jest.mock("../logger");
+jest.mock("../logger/winston-logger.js");
 
 describe("FileOps", () => {
   const dateParser: DateParser = new DateParser();

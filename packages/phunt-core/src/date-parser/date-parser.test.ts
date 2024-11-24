@@ -1,5 +1,5 @@
 import { describe, it, expect } from "@jest/globals";
-import { DateParser } from "./date-parser";
+import { DateParser } from "./date-parser.js";
 
 describe("DateParser", () => {
   const dateParser = new DateParser();

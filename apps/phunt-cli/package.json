@@ -2,6 +2,7 @@
   "name": "@112dev/phunt-cli",
   "version": "1.0.0-beta.2",
   "license": "Apache-2.0",
+  "type": "module",
   "main": "./dist/phunt-cli.js",
   "bin": {
     "phunt": "./dist/phunt-cli.js"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@112dev/phunt-contracts": "workspace:*",
     "@112dev/phunt-eslint-config": "workspace:*",
+    "@112dev/phunt-jest-config": "workspace:*",
     "@112dev/phunt-prettier-config": "workspace:*",
     "@112dev/phunt-rollup-config": "workspace:*",
     "@112dev/phunt-typescript-config": "workspace:*",
